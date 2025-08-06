@@ -35,10 +35,12 @@ app.use('/api', productRoutes);
 
 
 const DB_PATH =  process.env.DB_PATH ;
+const PORT = process.env.PORT || 8080;
 
 mongoose.connect(DB_PATH).then(()=>{
-  app.listen(8080, ()=>{
-    console.log(`Server is running at localhost:8080`)});
+  app.listen(PORT, ()=>{
+    console.log(`Server is running at localhost:${PORT}`);
+});
 }).catch(err=>{
   console.log("DataBase connection failed", err)
 }) ;
