@@ -4,12 +4,10 @@ const cloudinary = require("../utils/cloudinary");
 
 async function getAllItems(req, res) {
 
-  console.log("Fetching all items...");
-  console.log(process.env.CLOUDINARY_API_KEY);;
   let items = await Product.find().then((products) => {
     return products;
   });
-  // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1000));
+
   res.json({ items });
 }
 
@@ -20,9 +18,7 @@ async function getItemById(req, res) {
 
 async function deleteItem(req, res) {
   const { itemId, userId, imagePublicId } = req.body;
-  console.log("ItemId for deletion:", itemId);
-  console.log("UserId for deletion:", userId);
-  console.log("Image Public ID for deletion:", imagePublicId);
+  
   try {
     // Delete from Cloudinary
     await cloudinary.uploader.destroy(imagePublicId);
@@ -123,13 +119,13 @@ async function removeFromWishlist(req, res) {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("User wishlist before removal:", user.wishlist);
+    
     user.wishlist = user.wishlist.filter(
       (item) => item.toString() !== productId.toString()
     );
     await user.save();
 
-    console.log("Updated wishlist:", user.wishlist);
+
     res
       .status(200)
       .json({
