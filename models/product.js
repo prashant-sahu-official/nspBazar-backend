@@ -49,6 +49,10 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
      },
+     mobile: {
+        type: Number,
+        required: true
+     },
      postedAt: {
         type: Date,
         default: Date.now,

@@ -51,7 +51,7 @@ async function deleteItem(req, res) {
 }
 
 async function createItem(req, res) {
-  const { title, category, location, price, description, userId } = req.body;
+  const { title, category, location, price, description, userId, mobile } = req.body;
 
   const imageUrl = req.file?.path; // Cloudinary URL
   const imagePublicId = req.file.filename; // This is the public_id
@@ -64,6 +64,7 @@ async function createItem(req, res) {
     image: imageUrl,
     imagePublicId: imagePublicId, // Store the public_id for future reference
     location,
+    mobile,
     price,
     description,
   });
