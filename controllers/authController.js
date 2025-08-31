@@ -46,5 +46,25 @@ async function login(req, res) {
     }
 }
 
-exports.signup = signup ;
-exports.login = login ;
+async function googleLogin(req, res) {
+       try{
+    
+        const { email, name } = req.body;
+
+        let user = await User.findOne({ email });
+        if (!user) {
+            user = new User({ name, email, password: "google-auth" });
+            await user.save();
+        }
+
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+
+        res.json({ token, user: { id: user._id, name: user.name, role: user.role } });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+exports.signup = signup;
+exports.login = login;
+exports.googleLogin = googleLogin;
