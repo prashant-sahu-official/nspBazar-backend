@@ -43,6 +43,10 @@ async function deleteItem(req, res) {
     user.myPosts = user.myPosts.filter(
       (item) => item.toString() !== itemId.toString()
     );
+    // Also remove item from user's wishlist if present
+    user.wishlist = user.wishlist.filter(
+      (item) => item.toString() !== itemId.toString()
+    );
     await user.save();
     res.status(200).json({ message: "Item deleted successfully" });
   } catch (error) {

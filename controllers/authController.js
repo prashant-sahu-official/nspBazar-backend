@@ -47,6 +47,7 @@ async function login(req, res) {
 }
 
 async function googleLogin(req, res) {
+    console.log("Google login request body:", req.body);
        try{
     
         const { email, name } = req.body;
